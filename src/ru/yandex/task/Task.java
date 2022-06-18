@@ -1,19 +1,19 @@
+package ru.yandex.task;
+
 public class Task {
 
-    protected String nameTask;
+    protected String name;
     protected String descriptionTask;
     protected int id;
     protected TaskStatus statusTask;
 
-    public Task(String nameTask, String descriptionTask, int identificationNumber, TaskStatus statusTask) {
-        this.nameTask = nameTask;
+    public Task(String nameTask, String descriptionTask) {
+        this.name = nameTask;
         this.descriptionTask = descriptionTask;
-        this.id = identificationNumber;
-        this.statusTask = statusTask;
     }
 
     public Task(String nameTask, String descriptionTask, int identificationNumber) {
-        this.nameTask = nameTask;
+        this.name = nameTask;
         this.descriptionTask = descriptionTask;
         this.id = identificationNumber;
         this.statusTask = TaskStatus.NEW;
@@ -23,44 +23,37 @@ public class Task {
     }
 
     public String getNameTask() {
-
-        return nameTask;
+        return name;
     }
 
     public void setNameTask(String nameTask) {
-
-        this.nameTask = nameTask;
+        this.name = nameTask;
     }
 
     public String getDescriptionTask() {
-
         return descriptionTask;
     }
 
     public void setDescriptionTask(String descriptionTask) {
-
         this.descriptionTask = descriptionTask;
     }
 
     public int getId() {
-
         return id;
     }
 
     public void setId(int identificationNumber) {
-
         this.id = identificationNumber;
     }
 
     public TaskStatus getStatusTask() {
-
         return statusTask;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "nameTask='" + nameTask + '\'' +
+                "name='" + name + '\'' +
                 ", descriptionTask='" + descriptionTask + '\'' +
                 ", id=" + id +
                 ", statusTask=" + statusTask +

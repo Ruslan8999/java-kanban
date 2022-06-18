@@ -1,5 +1,13 @@
+package ru.yandex.manager;
+
+import ru.yandex.task.Epic;
+import ru.yandex.task.Subtask;
+import ru.yandex.task.Task;
+import ru.yandex.task.TaskStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Manager {
 
@@ -7,9 +15,9 @@ public class Manager {
     private int subTaskCounter;
     private int epicTaskCounter;
 
-    private HashMap<Integer, Task> taskHashMap;
-    private HashMap<Integer, Subtask> subtaskHashMap;
-    private HashMap<Integer, Epic> epicHashMap;
+    private Map<Integer, Task> taskHashMap;
+    private Map<Integer, Subtask> subtaskHashMap;
+    private Map<Integer, Epic> epicHashMap;
 
     public Manager() {
 
@@ -21,78 +29,72 @@ public class Manager {
         epicHashMap = new HashMap<>();
     }
 
-    public int getTaskNum() {
-
-        return taskCounter++;
-    }
-
-    public int getSubTaskNum() {
-
-        return subTaskCounter++;
-    }
-
-    public int getEpicTaskNum() {
-
-        return epicTaskCounter++;
-    }
-
     public void addNewTask(Task task) {
         if (task == null) {
             System.out.println("Error! task = null");
             return;
         }
         if (task instanceof Epic) {
+            task.setId(epicTaskCounter++);
             epicHashMap.put(task.getId(), (Epic) task);
         } else if (task instanceof Subtask) {
+            task.setId(subTaskCounter++);
             subtaskHashMap.put(task.getId(), (Subtask) task);
+            updateEpicStatus(((Subtask) task).getParent());
         } else {
+            task.setId(taskCounter++);
             taskHashMap.put(task.getId(), task);
         }
     }
 
     public void updateTask(Task task) {
         if (task == null) {
-            System.out.println("Error! task = null");
+            System.out.println("Список задач пуст");
             return;
         }
         if (task instanceof Epic) {
             epicHashMap.put(task.getId(), (Epic) task);
         } else if (task instanceof Subtask) {
-            if(subtaskHashMap.containsKey(task.getId())) {
+            if (subtaskHashMap.containsKey(task.getId())) {
                 TaskStatus oldTaskStatus = subtaskHashMap.get(task.getId()).getStatusTask();
                 subtaskHashMap.put(task.getId(), (Subtask) task);
-                if(!oldTaskStatus.equals(task.getStatusTask())){
+                if (!oldTaskStatus.equals(task.getStatusTask())) {
                     updateEpicStatus(((Subtask) task).getParent());
                 }
             } else {
-                System.out.println("Manager.updateTask:Error");
+                System.out.println("Неккоректные данные");
             }
         } else {
             taskHashMap.put(task.getId(), task);
         }
     }
 
-    public void updateEpicStatus(Epic epic){
-        if(epic==null){
-            System.out.println("Error");
+    public void updateEpicStatus(Epic epic) {
+        if (epic == null) {
+            System.out.println("Список задач пуст");
             return;
         }
         ArrayList<Subtask> subtasks = getEpicSubTask(epic);
-        if (subtasks.isEmpty()){
+        if (subtasks.isEmpty()) {
             epic.setStatusTask(TaskStatus.NEW);
             return;
         }
         int newStatusCounter = 0;
         int doneStatusCounter = 0;
-        for(Subtask subtask : subtasks){
-            switch (subtask.getStatusTask()){
-                case NEW: newStatusCounter++; break;
-                case IN_PROGRESS: break;
-                case DONE: doneStatusCounter++; break;
+        for (Subtask subtask : subtasks) {
+            switch (subtask.getStatusTask()) {
+                case NEW:
+                    newStatusCounter++;
+                    break;
+                case IN_PROGRESS:
+                    break;
+                case DONE:
+                    doneStatusCounter++;
+                    break;
             }
-            if (newStatusCounter==subtasks.size()){
+            if (newStatusCounter == subtasks.size()) {
                 epic.setStatusTask(TaskStatus.NEW);
-            } else if (doneStatusCounter==subtasks.size()) {
+            } else if (doneStatusCounter == subtasks.size()) {
                 epic.setStatusTask(TaskStatus.DONE);
             } else {
                 epic.setStatusTask(TaskStatus.IN_PROGRESS);
@@ -128,7 +130,7 @@ public class Manager {
 
     public void printEpic(String nameEpic) {
         for (Epic epic : epicHashMap.values()) {
-            if (nameEpic == epic.nameTask) {
+            if (nameEpic == epic.getNameTask()) {
                 for (Subtask subtask : getEpicSubTask(epic)) {
                     System.out.println(subtask);
                 }
