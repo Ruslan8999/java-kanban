@@ -51,36 +51,5 @@ public class Main {
         manager.addNewTask(subtask3);
         manager.printAll();
         System.out.println("================================");
-
-
-        //Получение по идентификатору:
-        /*System.out.println(manager.getTaskForId(0));
-        System.out.println(manager.getEpicForId(0));
-        System.out.println(manager.getSubtaskForId(0));*/
-
-        //Удаление по идентификатору:
-        /*manager.deleteTaskForId(0);
-        //manager.deleteEpicForId(0);
-        //manager.deleteSubTaskForId(1);*/
-
-        //Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра:
-        /*ru.yandex.Task.Task newTask =new ru.yandex.Task.Task("Новая задача", "Новая цель",0);
-        manager.updateTask(newTask);
-        ru.yandex.ru.yandex.Task.Task.Epic.Epic newEpic1 = new ru.yandex.ru.yandex.Task.Task.Epic.Epic("new Работа", "new Доделать проект",0);
-        manager.updateTask(newEpic1);
-        ru.yandex.Task.Subtusk.Subtask newSubtask1 = new ru.yandex.Task.Subtusk.Subtask("new Коммит", "new Закоммитить результат", 0, epic1);
-        manager.updateTask(newSubtask1);
-
-        System.out.println(manager.getTaskForId(0));
-        System.out.println(manager.getEpicForId(0));
-        System.out.println(manager.getSubtaskForId(0));*/
-
-
-        //Удаление всех задач:
-        //manager.deleteAll();
-
-        //Получение списка всех подзадач определённого эпика:
-        /*manager.printEpic("Работа");*/
-
     }
 }
