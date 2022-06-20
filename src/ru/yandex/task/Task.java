@@ -1,7 +1,6 @@
 package ru.yandex.task;
 
 public class Task {
-
     protected String name;
     protected String descriptionTask;
     protected int id;
@@ -10,13 +9,6 @@ public class Task {
     public Task(String nameTask, String descriptionTask) {
         this.name = nameTask;
         this.descriptionTask = descriptionTask;
-    }
-
-    public Task(String nameTask, String descriptionTask, int identificationNumber) {
-        this.name = nameTask;
-        this.descriptionTask = descriptionTask;
-        this.id = identificationNumber;
-        this.statusTask = TaskStatus.NEW;
     }
 
     public Task() {

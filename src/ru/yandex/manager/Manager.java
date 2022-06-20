@@ -7,20 +7,18 @@ import ru.yandex.task.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Manager {
-
     private int taskCounter;
     private int subTaskCounter;
     private int epicTaskCounter;
-
-    private Map<Integer, Task> taskHashMap;
-    private Map<Integer, Subtask> subtaskHashMap;
-    private Map<Integer, Epic> epicHashMap;
+    private final Map<Integer, Task> taskHashMap;
+    private final Map<Integer, Subtask> subtaskHashMap;
+    private final Map<Integer, Epic> epicHashMap;
 
     public Manager() {
-
         taskCounter = 0;
         subTaskCounter = 0;
         epicTaskCounter = 0;
@@ -74,7 +72,7 @@ public class Manager {
             System.out.println("Список задач пуст");
             return;
         }
-        ArrayList<Subtask> subtasks = getEpicSubTask(epic);
+        List<Subtask> subtasks = getEpicSubTask(epic);
         if (subtasks.isEmpty()) {
             epic.setStatusTask(TaskStatus.NEW);
             return;
@@ -102,8 +100,8 @@ public class Manager {
         }
     }
 
-    public ArrayList<Subtask> getEpicSubTask(Epic epic) {
-        ArrayList<Subtask> subtasks = new ArrayList<>();
+    public List<Subtask> getEpicSubTask(Epic epic) {
+        List<Subtask> subtasks = new ArrayList<>();
         if (epic == null) {
             System.out.println("Список эпиков пуст");
             return subtasks;
@@ -211,6 +209,4 @@ public class Manager {
             System.out.println("Такого номера подзадачи нет");
         }
     }
-
-
 }
