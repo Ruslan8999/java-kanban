@@ -38,6 +38,7 @@ public class Manager {
         } else if (task instanceof Subtask) {
             task.setId(subTaskCounter++);
             subtaskHashMap.put(task.getId(), (Subtask) task);
+            ((Subtask) task).getParent().addSubtask((Subtask) task);
             updateEpicStatus(((Subtask) task).getParent());
         } else {
             task.setId(taskCounter++);

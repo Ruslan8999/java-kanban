@@ -14,6 +14,7 @@ public class Subtask extends Task {
             System.out.println("parent = null");
         }
     }
+
     public Subtask(String nameTask, String descriptionTask, Epic parent) {
         if (parent != null) {
             this.name = nameTask;

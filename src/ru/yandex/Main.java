@@ -47,7 +47,7 @@ public class Main {
         manager.printAll();
         System.out.println("================================");
 
-        subtask3 = new Subtask("Доработки", "Внести исправления",  epic1);
+        subtask3 = new Subtask("Доработки", "Внести исправления", epic1);
         manager.addNewTask(subtask3);
         manager.printAll();
         System.out.println("================================");
