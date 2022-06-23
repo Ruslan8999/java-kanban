@@ -10,23 +10,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Manager {
+public class InMemoryTaskManager implements TaskManager {
     private int taskCounter;
     private int subTaskCounter;
     private int epicTaskCounter;
     private final Map<Integer, Task> taskHashMap;
     private final Map<Integer, Subtask> subtaskHashMap;
     private final Map<Integer, Epic> epicHashMap;
+    private final HistoryManager historyManager;
 
-    public Manager() {
+    public InMemoryTaskManager() {
         taskCounter = 0;
         subTaskCounter = 0;
         epicTaskCounter = 0;
         taskHashMap = new HashMap<>();
         subtaskHashMap = new HashMap<>();
         epicHashMap = new HashMap<>();
+        historyManager = Managers.getDefaultHistory();
     }
-
+    @Override
     public void addNewTask(Task task) {
         if (task == null) {
             System.out.println("Error! task = null");
@@ -46,6 +48,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void updateTask(Task task) {
         if (task == null) {
             System.out.println("Список задач пуст");
@@ -68,6 +71,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void updateEpicStatus(Epic epic) {
         if (epic == null) {
             System.out.println("Список задач пуст");
@@ -101,6 +105,7 @@ public class Manager {
         }
     }
 
+    @Override
     public List<Subtask> getEpicSubTask(Epic epic) {
         List<Subtask> subtasks = new ArrayList<>();
         if (epic == null) {
@@ -115,6 +120,7 @@ public class Manager {
         return subtasks;
     }
 
+    @Override
     public void printAll() {
         for (Task task : taskHashMap.values()) {
             System.out.println(task);
@@ -127,6 +133,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void printEpic(String nameEpic) {
         for (Epic epic : epicHashMap.values()) {
             if (nameEpic == epic.getNameTask()) {
@@ -139,6 +146,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void deleteAll() {
         if (taskHashMap != null) {
             taskHashMap.clear();
@@ -157,33 +165,43 @@ public class Manager {
         }
     }
 
+    @Override
     public Task getTaskForId(int id) {
         if (id < taskHashMap.size() && id >= 0) {
-            return taskHashMap.get(id);
+            Task task = taskHashMap.get(id);
+            historyManager.add(task);
+            return task;
         } else {
             System.out.println("Неверно введен номер задачи");
             return null;
         }
     }
 
+    @Override
     public Epic getEpicForId(int id) {
         if (id < epicHashMap.size() && id >= 0) {
-            return epicHashMap.get(id);
+            Epic epic = epicHashMap.get(id);
+            historyManager.add(epic);
+            return epic;
         } else {
             System.out.println("Неверно введен номер эпика");
             return null;
         }
     }
 
+    @Override
     public Subtask getSubtaskForId(int id) {
         if (id < subtaskHashMap.size() && id >= 0) {
-            return subtaskHashMap.get(id);
+            Subtask subtask = subtaskHashMap.get(id);
+            historyManager.add(subtask);
+            return subtask;
         } else {
             System.out.println("Неверно введен номер подзадачи");
             return null;
         }
     }
 
+    @Override
     public void deleteTaskForId(int id) {
         if (taskHashMap.containsKey(id)) {
             taskHashMap.remove(id);
@@ -193,6 +211,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void deleteEpicForId(int id) {
         if (epicHashMap.containsKey(id)) {
             epicHashMap.remove(id);
@@ -202,6 +221,7 @@ public class Manager {
         }
     }
 
+    @Override
     public void deleteSubTaskForId(int id) {
         if (subtaskHashMap.containsKey(id)) {
             subtaskHashMap.remove(id);
@@ -209,5 +229,9 @@ public class Manager {
         } else {
             System.out.println("Такого номера подзадачи нет");
         }
+    }
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
     }
 }

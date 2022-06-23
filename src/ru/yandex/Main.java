@@ -1,16 +1,18 @@
 package ru.yandex;
 
-import ru.yandex.manager.Manager;
+import ru.yandex.manager.InMemoryTaskManager;
 import ru.yandex.task.Epic;
 import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
 import ru.yandex.task.TaskStatus;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        Manager manager = new Manager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
 
         //Создание. Сам объект должен передаваться в качестве параметра:
         Task task1 = new Task("Трекер задач", "Научиться делать трекер");
@@ -28,6 +30,26 @@ public class Main {
 
         //Получение списка всех задач:
         manager.printAll();
+
+        System.out.println("================================");
+
+        manager.getEpicForId(0);
+        manager.getEpicForId(1);
+        manager.getSubtaskForId(0);
+        manager.getSubtaskForId(1);
+        manager.getSubtaskForId(2);
+        manager.getTaskForId(0);
+        manager.getEpicForId(0);
+        manager.getEpicForId(1);
+        manager.getSubtaskForId(0);
+        manager.getSubtaskForId(1);
+        manager.getSubtaskForId(2);
+        manager.getTaskForId(0);
+
+        List<Task> openTask = manager.getHistoryManager().getHistory();
+        for (Task task: openTask){
+            System.out.println(task.getId());
+        }
 
         System.out.println("================================");
 
