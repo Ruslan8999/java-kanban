@@ -1,6 +1,7 @@
 package ru.yandex;
 
-import ru.yandex.manager.InMemoryTaskManager;
+import ru.yandex.manager.Managers;
+import ru.yandex.manager.TaskManager;
 import ru.yandex.task.Epic;
 import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
@@ -12,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        TaskManager manager = Managers.getDefault();
 
         //Создание. Сам объект должен передаваться в качестве параметра:
         Task task1 = new Task("Трекер задач", "Научиться делать трекер");
@@ -47,7 +48,7 @@ public class Main {
         manager.getTaskForId(0);
 
         List<Task> openTask = manager.getHistoryManager().getHistory();
-        for (Task task: openTask){
+        for (Task task : openTask) {
             System.out.println(task.getId());
         }
 

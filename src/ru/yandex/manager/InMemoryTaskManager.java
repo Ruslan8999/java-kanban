@@ -28,6 +28,7 @@ public class InMemoryTaskManager implements TaskManager {
         epicHashMap = new HashMap<>();
         historyManager = Managers.getDefaultHistory();
     }
+
     @Override
     public void addNewTask(Task task) {
         if (task == null) {
@@ -71,8 +72,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    @Override
-    public void updateEpicStatus(Epic epic) {
+    private void updateEpicStatus(Epic epic) {
         if (epic == null) {
             System.out.println("Список задач пуст");
             return;
@@ -136,7 +136,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void printEpic(String nameEpic) {
         for (Epic epic : epicHashMap.values()) {
-            if (nameEpic == epic.getNameTask()) {
+            if (nameEpic.equals(epic.getNameTask())) {
                 for (Subtask subtask : getEpicSubTask(epic)) {
                     System.out.println(subtask);
                 }

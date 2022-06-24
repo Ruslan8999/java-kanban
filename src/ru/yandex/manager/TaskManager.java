@@ -7,29 +7,29 @@ import ru.yandex.task.Task;
 import java.util.List;
 
 public interface TaskManager {
-    public void addNewTask(Task task);
+    void addNewTask(Task task);
 
-    public void updateTask(Task task);
+    void updateTask(Task task);
 
-    public void updateEpicStatus(Epic epic);
+    List<Subtask> getEpicSubTask(Epic epic);
 
-    public List<Subtask> getEpicSubTask(Epic epic);
+    void printAll();
 
-    public void printAll();
+    void printEpic(String nameEpic);
 
-    public void printEpic(String nameEpic);
-    public void deleteAll();
+    void deleteAll();
 
-    public Task getTaskForId(int id);
+    Task getTaskForId(int id);
 
-    public Epic getEpicForId(int id);
+    Epic getEpicForId(int id);
 
-    public Subtask getSubtaskForId(int id);
+    Subtask getSubtaskForId(int id);
 
-    public void deleteTaskForId(int id);
+    void deleteTaskForId(int id);
 
-    public void deleteEpicForId(int id);
+    void deleteEpicForId(int id);
 
-    public void deleteSubTaskForId(int id);
+    void deleteSubTaskForId(int id);
 
+    HistoryManager getHistoryManager();
 }
