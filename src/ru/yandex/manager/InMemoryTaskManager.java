@@ -65,7 +65,7 @@ public class InMemoryTaskManager implements TaskManager {
                     updateEpicStatus(((Subtask) task).getParent());
                 }
             } else {
-                System.out.println("Неккоректные данные");
+                System.out.println("Некорректные данные");
             }
         } else {
             taskHashMap.put(task.getId(), task);
@@ -205,6 +205,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTaskForId(int id) {
         if (taskHashMap.containsKey(id)) {
             taskHashMap.remove(id);
+            historyManager.remove(id);
             System.out.println("Задача с номером id='" + id + '\'' + " удалена.");
         } else {
             System.out.println("Такого номера задачи нет");
@@ -215,6 +216,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpicForId(int id) {
         if (epicHashMap.containsKey(id)) {
             epicHashMap.remove(id);
+            historyManager.remove(id);
             System.out.println("Эпик с номером id='" + id + '\'' + " удален.");
         } else {
             System.out.println("Такого номера эпика нет");
@@ -225,6 +227,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubTaskForId(int id) {
         if (subtaskHashMap.containsKey(id)) {
             subtaskHashMap.remove(id);
+            historyManager.remove(id);
             System.out.println("Подзадача с номером id='" + id + '\'' + " удалена.");
         } else {
             System.out.println("Такого номера подзадачи нет");
