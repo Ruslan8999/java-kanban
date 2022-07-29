@@ -1,5 +1,8 @@
-package ru.yandex.manager;
+package ru.yandex.manager.memory;
 
+import ru.yandex.manager.HistoryManager;
+import ru.yandex.manager.Managers;
+import ru.yandex.manager.TaskManager;
 import ru.yandex.task.Epic;
 import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
@@ -18,7 +21,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtaks;
     private final Map<Integer, Epic> epics;
     private final HistoryManager historyManager;
-
 
     public InMemoryTaskManager() {
         taskCounter = 0;
@@ -39,6 +41,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (task instanceof Epic) {
             task.setId(epicTaskCounter++);
             epics.put(task.getId(), (Epic) task);
+            task.setStatusTask(TaskStatus.NEW);
         } else if (task instanceof Subtask) {
             task.setId(subTaskCounter++);
             subtaks.put(task.getId(), (Subtask) task);
@@ -47,6 +50,7 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             task.setId(taskCounter++);
             tasks.put(task.getId(), task);
+            task.setStatusTask(TaskStatus.NEW);
         }
     }
 
@@ -237,5 +241,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     public HistoryManager getHistoryManager() {
         return historyManager;
+    }
+
+    public Map<Integer, Task> getTasks() {
+        return tasks;
+    }
+
+    public Map<Integer, Subtask> getSubtaks() {
+        return subtaks;
+    }
+
+    public Map<Integer, Epic> getEpics() {
+        return epics;
     }
 }

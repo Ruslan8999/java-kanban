@@ -5,10 +5,12 @@ public class Task {
     protected String descriptionTask;
     protected int id;
     protected TaskStatus statusTask;
+    protected TasksType tasksType;
 
     public Task(String nameTask, String descriptionTask) {
         this.name = nameTask;
         this.descriptionTask = descriptionTask;
+        this.tasksType = TasksType.TASK;
     }
 
     public Task() {
@@ -42,6 +44,18 @@ public class Task {
         return statusTask;
     }
 
+    public TasksType getTasksType() {
+        return tasksType;
+    }
+
+    public void setStatusTask(TaskStatus statusTask) {
+        this.statusTask = statusTask;
+    }
+
+    public void setTasksType(TasksType tasksType) {
+        this.tasksType = tasksType;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -49,6 +63,7 @@ public class Task {
                 ", descriptionTask='" + descriptionTask + '\'' +
                 ", id=" + id +
                 ", statusTask=" + statusTask +
+                ", tasksType=" + tasksType +
                 '}';
     }
 }

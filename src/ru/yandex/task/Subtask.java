@@ -21,9 +21,14 @@ public class Subtask extends Task {
             this.descriptionTask = descriptionTask;
             this.statusTask = TaskStatus.NEW;
             this.parent = parent;
+            this.tasksType = TasksType.SUBTASK;
         } else {
             System.out.println("parent = null");
         }
+    }
+
+    public Subtask(String nameTask, String descriptionTask) {
+        super(nameTask, descriptionTask);
     }
 
     public Epic getParent() {
@@ -33,10 +38,11 @@ public class Subtask extends Task {
     @Override
     public String toString() {
         return "Subtask{" +
-                "nameSubtask='" + name + '\'' +
-                ", descriptionSubtask='" + descriptionTask + '\'' +
+                "name='" + name + '\'' +
+                ", descriptionTask='" + descriptionTask + '\'' +
                 ", id=" + id +
-                ", statusSubtask=" + statusTask +
+                ", statusTask=" + statusTask +
+                ", tasksType=" + tasksType +
                 '}';
     }
 }

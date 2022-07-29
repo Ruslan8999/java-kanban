@@ -1,5 +1,6 @@
-package ru.yandex.manager;
+package ru.yandex.manager.memory;
 
+import ru.yandex.manager.HistoryManager;
 import ru.yandex.task.Task;
 
 import java.util.ArrayList;

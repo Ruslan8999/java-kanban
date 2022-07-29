@@ -8,6 +8,7 @@ public class Epic extends Task {
 
     public Epic(String nameTask, String descriptionTask) {
         super(nameTask, descriptionTask);
+        this.tasksType = TasksType.EPIC;
     }
 
     public void setStatusTask(TaskStatus taskStatus) {
@@ -33,10 +34,11 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "nameEpic='" + name + '\'' +
-                ", descriptionEpic='" + descriptionTask + '\'' +
+                "name='" + name + '\'' +
+                ", descriptionTask='" + descriptionTask + '\'' +
                 ", id=" + id +
-                ", statusEpic=" + statusTask +
+                ", statusTask=" + statusTask +
+                ", tasksType=" + tasksType +
                 '}';
     }
 }
