@@ -2,16 +2,17 @@ package ru.yandex;
 
 import ru.yandex.manager.Managers;
 import ru.yandex.manager.TaskManager;
+import ru.yandex.manager.file.FileBackedTasksManager;
 import ru.yandex.task.Epic;
 import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
 
+import java.io.File;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-
         TaskManager manager = Managers.getDefault();
 
         Task task1 = new Task("Задача 1", "Описание задачи 1");
@@ -39,7 +40,6 @@ public class Main {
         manager.getEpicForId(1);
         manager.getTaskForId(0);
 
-
         List<Task> openTask = manager.getHistoryManager().getHistory();
         for (Task task : openTask) {
             System.out.println(task.getId());
@@ -50,5 +50,18 @@ public class Main {
         manager.deleteEpicForId(0);
 
         manager.printAll();
+
+        System.out.println("================================");
+
+        FileBackedTasksManager fileBacked = new FileBackedTasksManager(new File("resources/tasks.csv"));
+
+        fileBacked.addNewTask(task1);
+        fileBacked.addNewTask(epic1);
+        fileBacked.addNewTask(epic2);
+
+        fileBacked.getTaskForId(0);
+        fileBacked.getEpicForId(1);
+
+        //fileBacked.loadFromFile(new File("resources/tasks.csv"));
     }
 }
