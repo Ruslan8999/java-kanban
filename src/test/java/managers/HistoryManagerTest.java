@@ -1,20 +1,19 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+package managers;
+
 import org.junit.jupiter.api.Test;
 import ru.yandex.managers.HistoryManager;
 import ru.yandex.managers.InMemoryHistoryManager;
 import ru.yandex.managers.InMemoryTaskManager;
 import ru.yandex.managers.TaskManager;
-import ru.yandex.task.Epic;
-import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class HistoryManagerTest {
-    private TaskManager taskManager = new InMemoryTaskManager();
-    private HistoryManager historyManager = new InMemoryHistoryManager();
+    private final TaskManager taskManager = new InMemoryTaskManager();
+    private final HistoryManager historyManager = new InMemoryHistoryManager();
 
     @Test
     void testHistoryIsEmpty(){
@@ -23,8 +22,8 @@ public class HistoryManagerTest {
 
         List<Task> openTask = taskManager.getHistoryManager().getHistory();
 
-        Assertions.assertNotNull(openTask, "История задач null");
-        Assertions.assertEquals(openTask.size(), 0, "Список не пустой");
+        assertNotNull(openTask, "История задач null");
+        assertEquals(openTask.size(), 0, "Список не пустой");
     }
 
     @Test
@@ -35,8 +34,8 @@ public class HistoryManagerTest {
 
         List<Task> openTask = taskManager.getHistoryManager().getHistory();
 
-        Assertions.assertNotNull(openTask, "История задач null");
-        Assertions.assertEquals(openTask.size(), 1, "Список не пустой");
+        assertNotNull(openTask, "История задач null");
+        assertEquals(openTask.size(), 1, "Список не пустой");
         historyManager.getHistory().clear();
     }
 
@@ -55,7 +54,7 @@ public class HistoryManagerTest {
 
         List<Task> openTask = taskManager.getHistoryManager().getHistory();
 
-        Assertions.assertEquals(3, openTask.size(), "Размер списка не корректен");
+        assertEquals(3, openTask.size(), "Размер списка не корректен");
     }
 
     @Test
@@ -74,8 +73,8 @@ public class HistoryManagerTest {
 
         List<Task> openTask = taskManager.getHistoryManager().getHistory();
 
-        Assertions.assertEquals(2,openTask.size(),"Размер списка не изменился");
-        Assertions.assertEquals(openTask.get(0).getId(), task2.getId());
+        assertEquals(2,openTask.size(),"Размер списка не изменился");
+        assertEquals(openTask.get(0).getId(), task2.getId());
     }
 
     @Test
@@ -94,8 +93,8 @@ public class HistoryManagerTest {
 
         List<Task> openTask = taskManager.getHistoryManager().getHistory();
 
-        Assertions.assertNull(taskManager.getTaskForId(task3.getId()));
-        Assertions.assertEquals(2,openTask.size(),"Размер списка не изменился");
-        Assertions.assertEquals(openTask.get(1).getId(), task2.getId());
+        assertNull(taskManager.getTaskForId(task3.getId()));
+        assertEquals(2,openTask.size(),"Размер списка не изменился");
+        assertEquals(openTask.get(1).getId(), task2.getId());
     }
 }

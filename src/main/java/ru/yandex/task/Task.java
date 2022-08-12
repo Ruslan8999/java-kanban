@@ -10,7 +10,7 @@ public class Task {
     protected TaskStatus statusTask;
     protected TasksType tasksType;
     protected LocalDateTime startDate;
-    long durationInMinutes;
+    protected long durationInMinutes;
 
     public Task(String nameTask, String descriptionTask) {
         this.name = nameTask;

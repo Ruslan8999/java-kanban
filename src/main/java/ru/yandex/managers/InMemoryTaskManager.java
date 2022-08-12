@@ -33,7 +33,6 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Error! task = null");
             return;
         }
-        TreeSet<Task> prioritizedTasks = getPrioritizedTasks();
         if (task instanceof Epic) {
             task.setId(epicTaskCounter++);
             epics.put(task.getId(), (Epic) task);
@@ -59,7 +58,6 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Список задач пуст");
             return;
         }
-        TreeSet<Task> prioritizedTasks = getPrioritizedTasks();
         if (task instanceof Epic) {
             epics.put(task.getId(), (Epic) task);
             prioritizedTasks.add(task);

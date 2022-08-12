@@ -34,7 +34,7 @@ public class Epic extends Task {
         }
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    private void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
