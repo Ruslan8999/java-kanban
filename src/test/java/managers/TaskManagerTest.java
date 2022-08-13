@@ -166,16 +166,16 @@ abstract class TaskManagerTest <T extends TaskManager>{
         Task task1 = new Task("Задача 1", "Описание задачи 1", LocalDateTime.of(2022, 8, 12, 10, 15), 20);
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
         Subtask subtask1 = new Subtask("Подзадача 1 эпика 1", "Описание подзадачи 1", LocalDateTime.of(2022, 8, 12, 10, 15), 20, epic1);
-        Subtask subtask2 = new Subtask("Подзадача 2 эпика 1", "Описание подзадачи 2", LocalDateTime.of(2022, 8, 12, 10, 15), 25, epic1);
-        Subtask subtask3 = new Subtask("Подзадача 3 эпика 1", "Описание подзадачи 3", LocalDateTime.of(2022, 8, 12, 10, 15), 28, epic1);
+        Subtask subtask2 = new Subtask("Подзадача 2 эпика 1", "Описание подзадачи 2", LocalDateTime.of(2022, 8, 12, 10, 20), 25, epic1);
+        Subtask subtask3 = new Subtask("Подзадача 3 эпика 1", "Описание подзадачи 3", LocalDateTime.of(2022, 8, 12, 10, 25), 28, epic1);
         taskManager.addNewTask(task1);
         taskManager.addNewTask(epic1);
         taskManager.addNewTask(subtask1);
         taskManager.addNewTask(subtask2);
         taskManager.addNewTask(subtask3);
 
-        assertEquals(epic1.getDurationInMinutes(),73);
-        assertEquals(epic1.getEndDate(), LocalDateTime.of(2022,8,12,11,28));
+        assertEquals(epic1.getDurationInMinutes(),53);
+        assertEquals(epic1.getEndDate(), LocalDateTime.of(2022,8,12,11,13));
     }
 
     @Test

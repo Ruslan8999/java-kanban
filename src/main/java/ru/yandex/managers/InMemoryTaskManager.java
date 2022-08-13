@@ -33,22 +33,26 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Error! task = null");
             return;
         }
-        if (task instanceof Epic) {
-            task.setId(epicTaskCounter++);
-            epics.put(task.getId(), (Epic) task);
-            task.setStatusTask(TaskStatus.NEW);
-            prioritizedTasks.add(task);
-        } else if (task instanceof Subtask) {
-            task.setId(subTaskCounter++);
-            subtasks.put(task.getId(), (Subtask) task);
-            ((Subtask) task).getParent().addSubtask((Subtask) task);
-            updateEpicStatus(((Subtask) task).getParent());
-            prioritizedTasks.add(task);
+        if (checkCrossingTime(task) || prioritizedTasks.isEmpty()) {
+            if (task instanceof Epic) {
+                task.setId(epicTaskCounter++);
+                epics.put(task.getId(), (Epic) task);
+                task.setStatusTask(TaskStatus.NEW);
+                prioritizedTasks.add(task);
+            } else if (task instanceof Subtask) {
+                task.setId(subTaskCounter++);
+                subtasks.put(task.getId(), (Subtask) task);
+                ((Subtask) task).getParent().addSubtask((Subtask) task);
+                updateEpicStatus(((Subtask) task).getParent());
+                prioritizedTasks.add(task);
+            } else {
+                task.setId(taskCounter++);
+                tasks.put(task.getId(), task);
+                task.setStatusTask(TaskStatus.NEW);
+                prioritizedTasks.add(task);
+            }
         } else {
-            task.setId(taskCounter++);
-            tasks.put(task.getId(), task);
-            task.setStatusTask(TaskStatus.NEW);
-            prioritizedTasks.add(task);
+            System.out.println("Error! Пересечение задачи " + task.getNameTask() +". Задача не была добавлена");
         }
     }
 
@@ -58,23 +62,27 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Список задач пуст");
             return;
         }
-        if (task instanceof Epic) {
-            epics.put(task.getId(), (Epic) task);
-            prioritizedTasks.add(task);
-        } else if (task instanceof Subtask) {
-            if (subtasks.containsKey(task.getId())) {
-                TaskStatus oldTaskStatus = subtasks.get(task.getId()).getStatusTask();
-                subtasks.put(task.getId(), (Subtask) task);
-                if (!oldTaskStatus.equals(task.getStatusTask())) {
-                    updateEpicStatus(((Subtask) task).getParent());
-                    prioritizedTasks.add(task);
+        if (checkCrossingTime(task) || prioritizedTasks.isEmpty()) {
+            if (task instanceof Epic) {
+                epics.put(task.getId(), (Epic) task);
+                prioritizedTasks.add(task);
+            } else if (task instanceof Subtask) {
+                if (subtasks.containsKey(task.getId())) {
+                    TaskStatus oldTaskStatus = subtasks.get(task.getId()).getStatusTask();
+                    subtasks.put(task.getId(), (Subtask) task);
+                    if (!oldTaskStatus.equals(task.getStatusTask())) {
+                        updateEpicStatus(((Subtask) task).getParent());
+                        prioritizedTasks.add(task);
+                    }
+                } else {
+                    System.out.println("Некорректные данные");
                 }
             } else {
-                System.out.println("Некорректные данные");
+                tasks.put(task.getId(), task);
+                prioritizedTasks.add(task);
             }
         } else {
-            tasks.put(task.getId(), task);
-            prioritizedTasks.add(task);
+            System.out.println("Error! Пересечение задачи " + task.getNameTask() +". Задача не была добавлена");
         }
     }
 
@@ -109,6 +117,22 @@ public class InMemoryTaskManager implements TaskManager {
                 epic.setStatusTask(TaskStatus.IN_PROGRESS);
             }
         }
+    }
+
+    boolean checkCrossingTime (Task task) {
+        boolean isNotCrossingTime = false;
+        if (task.getStartDate() == null) {
+            isNotCrossingTime = true;
+        } else {
+            for (Task element: prioritizedTasks) {
+                if (!task.getStartDate().equals(element.getStartDate())) {
+                    isNotCrossingTime = true;
+                    break;
+                }
+                break;
+            }
+        }
+        return isNotCrossingTime;
     }
 
     @Override

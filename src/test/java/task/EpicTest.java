@@ -3,7 +3,6 @@ package task;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.managers.InMemoryTaskManager;
-import ru.yandex.managers.TaskManager;
 import ru.yandex.task.Epic;
 import ru.yandex.task.Subtask;
 import ru.yandex.task.TaskStatus;
@@ -11,8 +10,7 @@ import ru.yandex.task.TaskStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EpicTest {
-
-    TaskManager manager = new InMemoryTaskManager();
+    InMemoryTaskManager manager = new InMemoryTaskManager();
 
     @AfterEach
     void deleteAllTaskAfterEachTest() {

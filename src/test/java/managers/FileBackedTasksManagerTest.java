@@ -10,7 +10,6 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager> {
-
     FileBackedTasksManagerTest() {
         super(new FileBackedTasksManager(new File("src/main/resources/tasks.csv")));
     }
@@ -58,6 +57,4 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         assertEquals(fileBacked.getEpics().get(epic1.getId()),epic1);
         fileBacked.deleteAll();
     }
-
-
 }
