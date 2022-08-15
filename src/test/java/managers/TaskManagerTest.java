@@ -174,8 +174,8 @@ abstract class TaskManagerTest <T extends TaskManager>{
         taskManager.addNewTask(subtask2);
         taskManager.addNewTask(subtask3);
 
-        assertEquals(epic1.getDurationInMinutes(),53);
-        assertEquals(epic1.getEndDate(), LocalDateTime.of(2022,8,12,11,13));
+        assertEquals(epic1.getDurationInMinutes(),45);
+        assertEquals(epic1.getEndDate(), LocalDateTime.of(2022,8,12,11,00));
     }
 
     @Test

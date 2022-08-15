@@ -5,6 +5,7 @@ import ru.yandex.task.Subtask;
 import ru.yandex.task.Task;
 import ru.yandex.task.TaskStatus;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -52,7 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
                 prioritizedTasks.add(task);
             }
         } else {
-            System.out.println("Error! Пересечение задачи " + task.getNameTask() +". Задача не была добавлена");
+            System.out.println("Error! Пересечение задачи " + task.getNameTask() + ". Задача не была добавлена");
         }
     }
 
@@ -82,7 +83,7 @@ public class InMemoryTaskManager implements TaskManager {
                 prioritizedTasks.add(task);
             }
         } else {
-            System.out.println("Error! Пересечение задачи " + task.getNameTask() +". Задача не была добавлена");
+            System.out.println("Error! Пересечение задачи " + task.getNameTask() + ". Задача не была добавлена");
         }
     }
 
@@ -119,17 +120,29 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    boolean checkCrossingTime (Task task) {
+    boolean checkCrossingTime(Task task) {
         boolean isNotCrossingTime = false;
         if (task.getStartDate() == null) {
             isNotCrossingTime = true;
         } else {
-            for (Task element: prioritizedTasks) {
-                if (!task.getStartDate().equals(element.getStartDate())) {
+            for (Task element : prioritizedTasks) {
+                if (element.getStartDate() == null) {
+                    continue;
+                }
+                if (element.getId() == (task.getId())) {
                     isNotCrossingTime = true;
+                    continue;
+                }
+                if (task.getStartDate().equals(element.getStartDate())) {
+                    isNotCrossingTime = false;
                     break;
                 }
-                break;
+                if (!task.getStartDate().isBefore(element.getEndDate()) || !task.getEndDate().isAfter(element.getStartDate())) {
+                    isNotCrossingTime = true;
+                } else {
+                    isNotCrossingTime = false;
+                    break;
+                }
             }
         }
         return isNotCrossingTime;
