@@ -33,7 +33,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             fileWriter.write(System.lineSeparator());
             fileWriter.write(toStringHistory(getHistoryManager()));
         } catch (IOException e) {
-            throw new ManagerSaveException("Произошла ошибка во время записи файла.");
+            throw new ManagerSaveException("Произошла ошибка во время записи файла.", e.getCause());
         }
     }
 
