@@ -133,7 +133,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 + "," + task.getEndDate();
     }
 
-    private String toStringHistory(HistoryManager manager) {
+    protected String toStringHistory(HistoryManager manager) {
         List<String> ids = new ArrayList<>();
         for (Task task : manager.getHistory()) {
             int id = task.getId();

@@ -42,22 +42,19 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     @Override
     public void save() {
         if (!isNull(getTasks())) {
-            taskClient.put(KEY_TASKS, gson.toJson(getTasks(), new TypeToken<Map<Integer,
-                                Task>>() {
+            taskClient.put(KEY_TASKS, gson.toJson(getTasks(), new TypeToken<Map<Integer, Task>>() {
             }.getType()));
         }
         if (!isNull(getEpics())) {
-            taskClient.put(KEY_EPICS, gson.toJson(getEpics(), new TypeToken<Map<Integer,
-                    Epic>>() {
+            taskClient.put(KEY_EPICS, gson.toJson(getEpics(), new TypeToken<Map<Integer, Epic>>() {
             }.getType()));
         }
         if (!isNull(getSubtasks())) {
-            taskClient.put(KEY_SUBTASKS, gson.toJson(getSubtasks(), new TypeToken<Map<Integer,
-                    Subtask>>() {
+            taskClient.put(KEY_SUBTASKS, gson.toJson(getSubtasks(), new TypeToken<Map<Integer, Subtask>>() {
             }.getType()));
         }
         if (!getHistoryManager().getHistory().isEmpty()) {
-            taskClient.put(KEY_HISTORY, historyToString(Managers.getDefaultHistory()));
+            taskClient.put(KEY_HISTORY, toStringHistory(Managers.getDefaultHistory()));
         }
     }
 
@@ -90,13 +87,5 @@ public class HTTPTaskManager extends FileBackedTasksManager {
         for (Map.Entry<Integer, Subtask> entry : getSubtasks().entrySet()) {
             getPrioritizedTasks().add(entry.getValue());
         }
-    }
-
-    static String historyToString(HistoryManager manager) {
-        List<String> list = new ArrayList<>();
-        for (Task task : manager.getHistory()) {
-            list.add(Integer.toString(task.getId()));
-        }
-        return String.join(",", list);
     }
 }

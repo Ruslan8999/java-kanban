@@ -25,8 +25,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HTTPTaskManagerTest {
-    private static final int PORT = 8080;
+public class HTTPTaskManagerTest extends TaskManagerTest<HTTPTaskManager> {
+    private static final int PORT = 8078;
     private String url = "http://localhost:" + PORT;
     private HTTPTaskManager taskManager;
     private HttpClient client;
@@ -37,6 +37,10 @@ public class HTTPTaskManagerTest {
             .serializeNulls()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .create();
+
+    HTTPTaskManagerTest() {
+        super(new HTTPTaskManager(true));
+    }
 
     @BeforeEach
     void startServers() throws IOException {

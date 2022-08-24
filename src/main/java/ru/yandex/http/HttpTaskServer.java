@@ -21,6 +21,9 @@ import java.util.Map;
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
+    private static final String GET = "GET";
+    private static final String POST = "POST";
+    private static final String DELETE = "DELETE";
     private final HttpServer server;
     private final Gson gson;
     private final TaskManager manager;
@@ -63,8 +66,8 @@ public class HttpTaskServer {
             String query = exchange.getRequestURI().getRawQuery();
             String response;
             switch (method) {
-                case "GET": {
-                    if (!(query == null)) {
+                case GET: {
+                    if (query != null) {
                         int requestId = Integer.parseInt(query.substring(3));
                         if (manager.getTasks().containsKey(requestId)) {
                             Task requestedTask = manager.getTaskForId(requestId);
@@ -86,7 +89,7 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-                case "POST": {
+                case POST: {
                     System.out.println("Пришел запрос POST");
                     String json = readText(exchange);
                     if (json.isEmpty()) {
@@ -120,9 +123,8 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-
-                case "DELETE": {
-                    if (!(query == null)) {
+                case DELETE: {
+                    if (query != null) {
                         int idRequest = Integer.parseInt(query.substring(3));
                         if (manager.getTasks().containsKey(idRequest)) {
                             Task requestedTask = manager.getTaskForId(idRequest);
@@ -142,7 +144,6 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-
                 default:
                     response = "Использован неизвестный метод";
                     exchange.sendResponseHeaders(405, 0);
@@ -159,8 +160,8 @@ public class HttpTaskServer {
             String query = exchange.getRequestURI().getRawQuery();
             String response;
             switch (method) {
-                case "GET": {
-                    if (!(query == null)) {
+                case GET: {
+                    if (query != null) {
                         int idRequest = Integer.parseInt(query.substring(3));
                         if (manager.getEpics().containsKey(idRequest)) {
                             Task requestedTask = manager.getEpicForId(idRequest);
@@ -182,7 +183,7 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-                case "POST": {
+                case POST: {
                     System.out.println("Пришел запрос POST");
                     String json = readText(exchange);
                     if (json.isEmpty()) {
@@ -216,8 +217,8 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-                case "DELETE": {
-                    if (!(query == null)) {
+                case DELETE: {
+                    if (query != null) {
                         int idRequest = Integer.parseInt(query.substring(3));
                         if (manager.getEpics().containsKey(idRequest)) {
                             Task requestedTask = manager.getEpicForId(idRequest);
@@ -254,8 +255,8 @@ public class HttpTaskServer {
             String query = exchange.getRequestURI().getRawQuery();
             String response;
             switch (method) {
-                case "GET": {
-                    if (!(query == null)) {
+                case GET: {
+                    if (query != null) {
                         int idRequest = Integer.parseInt(query.substring(3));
                         if (manager.getSubtasks().containsKey(idRequest)) {
                             Task requestedTask = manager.getSubtaskForId(idRequest);
@@ -277,7 +278,7 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-                case "POST": {
+                case POST: {
                     System.out.println("Пришел запрос POST");
                     String json = readText(exchange);
                     if (json.isEmpty()) {
@@ -311,8 +312,8 @@ public class HttpTaskServer {
                     writeResponse(exchange, response);
                     break;
                 }
-                case "DELETE": {
-                    if (!(query == null)) {
+                case DELETE: {
+                    if (query != null) {
                         int idRequest = Integer.parseInt(query.substring(3));
                         if (manager.getSubtasks().containsKey(idRequest)) {
                             Task requestedTask = manager.getSubtaskForId(idRequest);
@@ -346,7 +347,7 @@ public class HttpTaskServer {
         public void handle(HttpExchange exchange) throws IOException {
             String method = exchange.getRequestMethod();
             String response;
-            if (method.equals("GET")) {
+            if (method.equals(GET)) {
                 response = gson.toJson(manager.getPrioritizedTasks());
                 exchange.sendResponseHeaders(200, 0);
                 writeResponse(exchange, response);
@@ -363,7 +364,7 @@ public class HttpTaskServer {
         public void handle(HttpExchange exchange) throws IOException {
             String method = exchange.getRequestMethod();
             String response;
-            if (method.equals("GET")) {
+            if (method.equals(GET)) {
                 if (!manager.getHistoryManager().getHistory().isEmpty()) {
                     response = gson.toJson(manager.getHistoryManager().getHistory());
                     exchange.sendResponseHeaders(200, 0);
